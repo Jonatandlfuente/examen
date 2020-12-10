@@ -10,11 +10,11 @@ public class Pokemon implements Parcelable {
 
     @SerializedName("name")
     @Expose()
-   private String name;
+    private String name;
 
     @SerializedName("url")
     @Expose()
-   private String url;
+    private String url;
 
     public Pokemon(String name, String url) {
         this.name = name;
@@ -24,6 +24,7 @@ public class Pokemon implements Parcelable {
     protected Pokemon(Parcel in) {
         name = in.readString();
         url = in.readString();
+        // location = in.readParcelable(Location.class.getClassLoader());
     }
 
     public static final Creator<Pokemon> CREATOR = new Creator<Pokemon>() {

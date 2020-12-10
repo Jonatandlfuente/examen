@@ -1,11 +1,14 @@
-package com.example.examen;
+package com.example.examen.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
+import com.example.examen.R;
 import com.example.examen.apiRest.ApiPokemon;
 import com.example.examen.constants.Constants;
 import com.example.examen.domain.JsonResponse;
@@ -20,6 +23,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+
     public final String TAG = getClass().getName();
     private ArrayList<Pokemon> mPokemon = new ArrayList<>();
     public static String name="";
@@ -28,7 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getAllPokemon();
+        Button btn=findViewById(R.id.btnMostrar);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAllPokemon();
+            }
+        });
     }
 
     public void getAllPokemon() {
@@ -47,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
         if (response != null && response.body() != null) {
             mPokemon = (ArrayList<Pokemon>) response.body().results;
             Log.d(TAG, "array de solo pokemon. Inicio");
-           // Intent sendPokemon = new Intent(getApplicationContext(),ActivityViewAdapter.class);
+            Intent sendPokemon = new Intent(getApplicationContext(),ActivityViewAdapter.class);
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("LIST",mPokemon);
-          //  sendPokemon.putExtras(bundle);
-           // startActivity(sendPokemon);
+            sendPokemon.putExtras(bundle);
+            startActivity(sendPokemon);
 
             for (Pokemon mPokemon : mPokemon) {
                 Log.d(TAG, mPokemon.getName() == null ? "" : mPokemon.getName()); //e.getLocalizedMessage() == null ? "" : e.getLocalizedMessage()
